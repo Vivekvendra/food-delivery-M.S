@@ -4,14 +4,16 @@ import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
+import RestaurantsPage from '../pages/restaurants/RestaurantsPage';
+import RestaurantDetailsPage from '../pages/restaurants/RestaurantDetailsPage';
 import PlaceholderPage from '../pages/dashboard/PlaceholderPage';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Root redirect */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      {/* Root redirect to Restaurants listing */}
+      <Route path="/" element={<Navigate to="/restaurants" replace />} />
 
       {/* Module 1: Authentication */}
       <Route path="/login" element={<LoginPage />} />
@@ -28,20 +30,26 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Scaffolding for upcoming modules to ensure complete navigation works */}
+      {/* Module 3: Restaurant Listing & Details */}
       <Route
         path="/restaurants"
         element={
           <ProtectedRoute>
-            <PlaceholderPage
-              title="Restaurants Listing"
-              moduleNumber="3"
-              description="Display and search registered restaurants, cuisine filters, ratings, and open/closed status."
-            />
+            <RestaurantsPage />
           </ProtectedRoute>
         }
       />
 
+      <Route
+        path="/restaurants/:id"
+        element={
+          <ProtectedRoute>
+            <RestaurantDetailsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Scaffolding for upcoming modules */}
       <Route
         path="/menu-items"
         element={
@@ -50,6 +58,19 @@ export default function AppRoutes() {
               title="Menu Management"
               moduleNumber="4"
               description="Manage food items, veg/non-veg categories, price sorting, and item availability."
+            />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoute>
+            <PlaceholderPage
+              title="Cart Management"
+              moduleNumber="5"
+              description="Review cart items, update quantities, calculate delivery and taxes, and proceed to checkout."
             />
           </ProtectedRoute>
         }
@@ -134,7 +155,7 @@ export default function AppRoutes() {
       />
 
       {/* Catch-all */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/restaurants" replace />} />
     </Routes>
   );
 }
