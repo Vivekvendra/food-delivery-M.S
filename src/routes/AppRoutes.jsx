@@ -6,6 +6,9 @@ import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import RestaurantsPage from '../pages/restaurants/RestaurantsPage';
 import RestaurantDetailsPage from '../pages/restaurants/RestaurantDetailsPage';
+import MenuManagementPage from '../pages/menu/MenuManagementPage';
+import FoodDetailsPage from '../pages/menu/FoodDetailsPage';
+import CartPage from '../pages/cart/CartPage';
 import PlaceholderPage from '../pages/dashboard/PlaceholderPage';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -49,29 +52,31 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Scaffolding for upcoming modules */}
+      {/* Module 4: Menu Management */}
       <Route
         path="/menu-items"
         element={
           <ProtectedRoute>
-            <PlaceholderPage
-              title="Menu Management"
-              moduleNumber="4"
-              description="Manage food items, veg/non-veg categories, price sorting, and item availability."
-            />
+            <MenuManagementPage />
           </ProtectedRoute>
         }
       />
 
       <Route
+        path="/menu-items/:id"
+        element={
+          <ProtectedRoute>
+            <FoodDetailsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Module 5: Cart Management */}
+      <Route
         path="/cart"
         element={
           <ProtectedRoute>
-            <PlaceholderPage
-              title="Cart Management"
-              moduleNumber="5"
-              description="Review cart items, update quantities, calculate delivery and taxes, and proceed to checkout."
-            />
+            <CartPage />
           </ProtectedRoute>
         }
       />
