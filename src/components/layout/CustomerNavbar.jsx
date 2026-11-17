@@ -67,13 +67,14 @@ export default function CustomerNavbar({ searchTerm = '', onSearchChange }) {
         {/* Right Controls: Notifications, Cart & Profile */}
         <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
           
-          {/* Admin Switch Shortcut (helpful to toggle between user & admin views) */}
+          {/* Admin Switch Shortcut */}
           <Link
-            to="/dashboard"
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-orange-700 bg-orange-50 hover:bg-orange-100/80 transition"
+            to="/admin/dashboard"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-slate-800 bg-slate-100 hover:bg-orange-50 hover:text-[#FF5A1F] hover:border-orange-200 border border-slate-200 transition shadow-2xs"
+            title="Switch to Admin Management Panel"
           >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-            <span>Admin Dashboard</span>
+            <LayoutDashboard className="w-3.5 h-3.5 text-[#FF5A1F]" />
+            <span>Admin Panel</span>
           </Link>
 
           {/* Notifications Bell */}

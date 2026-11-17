@@ -9,13 +9,21 @@ import RestaurantDetailsPage from '../pages/restaurants/RestaurantDetailsPage';
 import MenuManagementPage from '../pages/menu/MenuManagementPage';
 import FoodDetailsPage from '../pages/menu/FoodDetailsPage';
 import CartPage from '../pages/cart/CartPage';
-import PlaceholderPage from '../pages/dashboard/PlaceholderPage';
+import CheckoutPage from '../pages/orders/CheckoutPage';
+import OrderTrackingPage from '../pages/orders/OrderTrackingPage';
+import AdminRestaurantsPage from '../pages/admin/AdminRestaurantsPage';
+import AdminOrdersPage from '../pages/admin/AdminOrdersPage';
+import AdminCustomersPage from '../pages/admin/AdminCustomersPage';
+import AdminCouponsPage from '../pages/admin/AdminCouponsPage';
+import AdminPaymentsPage from '../pages/admin/AdminPaymentsPage';
+import AdminReportsPage from '../pages/admin/AdminReportsPage';
+import AdminProfilePage from '../pages/admin/AdminProfilePage';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Root redirect to Restaurants listing */}
+      {/* Root redirect to Customer Restaurants storefront */}
       <Route path="/" element={<Navigate to="/restaurants" replace />} />
 
       {/* Module 1: Authentication */}
@@ -23,7 +31,20 @@ export default function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-      {/* Module 2: Dashboard */}
+      {/* ========================================================
+          ADMIN PANEL (Always preserves the Dark Left Sidebar)
+         ======================================================== */}
+      <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+      
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/dashboard"
         element={
@@ -33,26 +54,24 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Module 3: Restaurant Listing & Details */}
       <Route
-        path="/restaurants"
+        path="/admin/restaurants"
         element={
           <ProtectedRoute>
-            <RestaurantsPage />
+            <AdminRestaurantsPage />
           </ProtectedRoute>
         }
       />
 
       <Route
-        path="/restaurants/:id"
+        path="/admin/menu-items"
         element={
           <ProtectedRoute>
-            <RestaurantDetailsPage />
+            <MenuManagementPage />
           </ProtectedRoute>
         }
       />
 
-      {/* Module 4: Menu Management */}
       <Route
         path="/menu-items"
         element={
@@ -71,7 +90,126 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Module 5: Cart Management */}
+      <Route
+        path="/admin/orders"
+        element={
+          <ProtectedRoute>
+            <AdminOrdersPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/customers"
+        element={
+          <ProtectedRoute>
+            <AdminCustomersPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/customers"
+        element={
+          <ProtectedRoute>
+            <AdminCustomersPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/coupons"
+        element={
+          <ProtectedRoute>
+            <AdminCouponsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/coupons"
+        element={
+          <ProtectedRoute>
+            <AdminCouponsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/payments"
+        element={
+          <ProtectedRoute>
+            <AdminPaymentsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/payments"
+        element={
+          <ProtectedRoute>
+            <AdminPaymentsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/reports"
+        element={
+          <ProtectedRoute>
+            <AdminReportsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute>
+            <AdminReportsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/profile"
+        element={
+          <ProtectedRoute>
+            <AdminProfilePage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <AdminProfilePage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* ========================================================
+          CUSTOMER PANEL (Top Navbar with Cart & Customer Storefront)
+         ======================================================== */}
+      <Route
+        path="/restaurants"
+        element={
+          <ProtectedRoute>
+            <RestaurantsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/restaurants/:id"
+        element={
+          <ProtectedRoute>
+            <RestaurantDetailsPage />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/cart"
         element={
@@ -82,79 +220,46 @@ export default function AppRoutes() {
       />
 
       <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/track-order"
+        element={
+          <ProtectedRoute>
+            <OrderTrackingPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/track-order/:id"
+        element={
+          <ProtectedRoute>
+            <OrderTrackingPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/orders/:id"
+        element={
+          <ProtectedRoute>
+            <OrderTrackingPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/orders"
         element={
           <ProtectedRoute>
-            <PlaceholderPage
-              title="Orders Management"
-              moduleNumber="6 & 7"
-              description="Track live order statuses: Preparing, Out for Delivery, Delivered, and Cancelled."
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/customers"
-        element={
-          <ProtectedRoute>
-            <PlaceholderPage
-              title="Customer Directory"
-              moduleNumber="8"
-              description="Manage registered customer profiles, delivery addresses, and contact details."
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/coupons"
-        element={
-          <ProtectedRoute>
-            <PlaceholderPage
-              title="Coupons & Discounts"
-              moduleNumber="9"
-              description="Configure promotional codes, percentage discounts, and validity periods."
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/payments"
-        element={
-          <ProtectedRoute>
-            <PlaceholderPage
-              title="Payments & Transactions"
-              moduleNumber="9"
-              description="Review UPI, Card, and Wallet transaction logs and payment gateways."
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/reports"
-        element={
-          <ProtectedRoute>
-            <PlaceholderPage
-              title="Business Analytics & Reports"
-              moduleNumber="2 & 10"
-              description="Detailed revenue, order volumes, customer retention, and performance reports."
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <PlaceholderPage
-              title="User Profile"
-              moduleNumber="8"
-              description="Manage admin/customer account profile, saved addresses, and notification preferences."
-            />
+            <OrderTrackingPage />
           </ProtectedRoute>
         }
       />

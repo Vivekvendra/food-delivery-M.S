@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { MenuProvider } from './context/MenuContext';
+import { OrderProvider } from './context/OrderContext';
 import AppRoutes from './routes/AppRoutes';
 
 export default function App() {
@@ -13,19 +14,21 @@ export default function App() {
       <AuthProvider>
         <MenuProvider>
           <CartProvider>
-            <AppRoutes />
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
+            <OrderProvider>
+              <AppRoutes />
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </OrderProvider>
           </CartProvider>
         </MenuProvider>
       </AuthProvider>

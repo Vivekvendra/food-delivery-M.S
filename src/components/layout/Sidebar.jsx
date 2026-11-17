@@ -28,15 +28,15 @@ export default function Sidebar({ isOpen, onClose }) {
   };
 
   const navItems = [
-    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { name: 'Restaurants', icon: Store, path: '/restaurants' },
-    { name: 'Menu Items', icon: UtensilsCrossed, path: '/menu-items' },
-    { name: 'Orders', icon: ShoppingBag, path: '/orders' },
-    { name: 'Customers', icon: Users, path: '/customers' },
-    { name: 'Coupons', icon: Tag, path: '/coupons' },
-    { name: 'Payments', icon: CreditCard, path: '/payments' },
-    { name: 'Reports', icon: BarChart3, path: '/reports' },
-    { name: 'Profile', icon: UserCircle, path: '/profile' },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
+    { name: 'Restaurants', icon: Store, path: '/admin/restaurants' },
+    { name: 'Menu Items', icon: UtensilsCrossed, path: '/admin/menu-items' },
+    { name: 'Orders', icon: ShoppingBag, path: '/admin/orders' },
+    { name: 'Customers', icon: Users, path: '/admin/customers' },
+    { name: 'Coupons', icon: Tag, path: '/admin/coupons' },
+    { name: 'Payments', icon: CreditCard, path: '/admin/payments' },
+    { name: 'Reports', icon: BarChart3, path: '/admin/reports' },
+    { name: 'Profile', icon: UserCircle, path: '/admin/profile' },
   ];
 
   const sidebarContent = (
@@ -86,13 +86,22 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
       </div>
 
-      {/* Footer / Logout */}
-      <div className="p-4 border-t border-slate-800/80">
+      {/* Footer: Customer Panel Switch & Logout */}
+      <div className="p-4 border-t border-slate-800/80 space-y-2">
+        <NavLink
+          to="/restaurants"
+          onClick={onClose}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs bg-orange-600/20 text-orange-400 hover:bg-orange-600 hover:text-white border border-orange-500/30 transition-all duration-150 cursor-pointer shadow-sm"
+        >
+          <Store className="w-4 h-4" />
+          <span>Switch to Customer Panel</span>
+        </NavLink>
+
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all duration-150 cursor-pointer"
+          className="w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all duration-150 cursor-pointer"
         >
-          <LogOut className="w-5 h-5 flex-shrink-0" />
+          <LogOut className="w-4 h-4 flex-shrink-0" />
           <span>Logout</span>
         </button>
       </div>

@@ -7,7 +7,8 @@ import {
   User, 
   Settings, 
   CheckCheck,
-  Shield
+  Shield,
+  Store
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { mockDashboardData } from '../../data/mockDashboardData';
@@ -65,8 +66,18 @@ export default function TopNavbar({ onMenuClick, title = "Dashboard", subtitle =
         </div>
       </div>
 
-      {/* Right Controls: Notifications & User Profile */}
-      <div className="flex items-center gap-3 sm:gap-5">
+      {/* Right Controls: Switch to Customer Panel, Notifications & User Profile */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Switch to Customer Panel Button */}
+        <Link
+          to="/restaurants"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FF5A1F] border border-orange-200/80 font-bold text-xs transition shadow-2xs group"
+          title="Open Customer Panel"
+        >
+          <Store className="w-4 h-4 text-[#FF5A1F] group-hover:scale-110 transition" />
+          <span className="hidden sm:inline">Customer Panel</span>
+        </Link>
+
         {/* Notifications Bell */}
         <div className="relative" ref={notifRef}>
           <button
