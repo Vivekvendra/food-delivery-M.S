@@ -19,6 +19,10 @@ import AdminPaymentsPage from '../pages/admin/AdminPaymentsPage';
 import AdminReportsPage from '../pages/admin/AdminReportsPage';
 import AdminProfilePage from '../pages/admin/AdminProfilePage';
 import CustomerProfilePage from '../pages/customer/CustomerProfilePage';
+import OrderHistoryPage from '../pages/orders/OrderHistoryPage';
+import CustomerCouponsPage from '../pages/customer/CustomerCouponsPage';
+import PaymentSuccessPage from '../pages/payment/PaymentSuccessPage';
+import PaymentFailurePage from '../pages/payment/PaymentFailurePage';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function AppRoutes() {
@@ -268,7 +272,80 @@ export default function AppRoutes() {
         path="/orders"
         element={
           <ProtectedRoute>
-            <OrderTrackingPage />
+            <OrderHistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/my-orders"
+        element={
+          <ProtectedRoute>
+            <OrderHistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/order-history"
+        element={
+          <ProtectedRoute>
+            <OrderHistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/customer/orders"
+        element={
+          <ProtectedRoute>
+            <OrderHistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Module 9: Coupons & Payment */}
+      <Route
+        path="/coupons-offers"
+        element={
+          <ProtectedRoute>
+            <CustomerCouponsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/customer/coupons"
+        element={
+          <ProtectedRoute>
+            <CustomerCouponsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/payment/success"
+        element={
+          <ProtectedRoute>
+            <PaymentSuccessPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/payment/success/:id"
+        element={
+          <ProtectedRoute>
+            <PaymentSuccessPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/payment/failure"
+        element={
+          <ProtectedRoute>
+            <PaymentFailurePage />
           </ProtectedRoute>
         }
       />

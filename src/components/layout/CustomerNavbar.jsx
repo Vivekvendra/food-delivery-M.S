@@ -8,7 +8,9 @@ import {
   User, 
   LogOut, 
   ChevronDown,
-  Sparkles
+  Sparkles,
+  ShoppingBag,
+  Tag
 } from 'lucide-react';
 import { ChefHatIcon } from '../common/Logo';
 import { useAuth } from '../../context/AuthContext';
@@ -71,10 +73,10 @@ export default function CustomerNavbar({ searchTerm = '', onSearchChange }) {
           <Link
             to="/admin/dashboard"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-slate-800 bg-slate-100 hover:bg-orange-50 hover:text-[#FF5A1F] hover:border-orange-200 border border-slate-200 transition shadow-2xs"
-            title="Switch to Admin Management Panel"
+            title="Switch to Admin"
           >
             <LayoutDashboard className="w-3.5 h-3.5 text-[#FF5A1F]" />
-            <span>Admin Panel</span>
+            <span>Admin</span>
           </Link>
 
           {/* Notifications Bell */}
@@ -153,6 +155,24 @@ export default function CustomerNavbar({ searchTerm = '', onSearchChange }) {
                   >
                     <User className="w-4 h-4 text-slate-400" />
                     <span>My Profile</span>
+                  </Link>
+
+                  <Link
+                    to="/my-orders"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-slate-400" />
+                    <span>My Orders</span>
+                  </Link>
+
+                  <Link
+                    to="/coupons-offers"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition"
+                  >
+                    <Tag className="w-4 h-4 text-slate-400" />
+                    <span>Coupons & Offers</span>
                   </Link>
                 </div>
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { mockDashboardData } from '../../data/mockDashboardData';
 
 export default function OrdersStatusDonut({ data }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const { total, breakdown } = data;
+  const activeData = data || mockDashboardData.ordersByStatus;
+  const { total, breakdown } = activeData;
   const size = 180;
   const strokeWidth = 24;
   const radius = (size - strokeWidth) / 2;

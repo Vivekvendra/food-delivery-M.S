@@ -86,15 +86,16 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
       </div>
 
-      {/* Footer: Customer Panel Switch & Logout */}
+      {/* Footer: Customer Switch & Logout */}
       <div className="p-4 border-t border-slate-800/80 space-y-2">
         <NavLink
           to="/restaurants"
           onClick={onClose}
           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs bg-orange-600/20 text-orange-400 hover:bg-orange-600 hover:text-white border border-orange-500/30 transition-all duration-150 cursor-pointer shadow-sm"
+          title="Switch to Customer"
         >
           <Store className="w-4 h-4" />
-          <span>Switch to Customer Panel</span>
+          <span>Customer</span>
         </NavLink>
 
         <button

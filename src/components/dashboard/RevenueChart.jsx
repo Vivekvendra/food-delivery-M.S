@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight } from 'lucide-react';
+import { mockDashboardData } from '../../data/mockDashboardData';
 
 export default function RevenueChart({ revenueData }) {
   const [selectedPeriod, setSelectedPeriod] = useState('Last 6 Months');
   const [hoveredPoint, setHoveredPoint] = useState(null);
 
-  const periods = Object.keys(revenueData.periods);
-  const currentData = revenueData.periods[selectedPeriod] || revenueData.periods['Last 6 Months'];
+  const activeRevenueData = revenueData || mockDashboardData.revenue;
+  const periods = Object.keys(activeRevenueData.periods);
+  const currentData = activeRevenueData.periods[selectedPeriod] || activeRevenueData.periods['Last 6 Months'];
 
   // SVG Chart Dimensions
   const width = 600;

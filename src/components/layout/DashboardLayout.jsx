@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import TopNavbar from './TopNavbar';
 
-export default function DashboardLayout({ children, title, subtitle }) {
+export default function DashboardLayout({ children, title, subtitle, fullWidth = false }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export default function DashboardLayout({ children, title, subtitle }) {
           subtitle={subtitle}
           onMenuClick={() => setMobileMenuOpen(true)}
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className={`flex-1 p-4 sm:p-6 lg:p-8 w-full ${fullWidth ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>
           {children}
         </main>
       </div>

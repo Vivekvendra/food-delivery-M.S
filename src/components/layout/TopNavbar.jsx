@@ -56,11 +56,11 @@ export default function TopNavbar({ onMenuClick, title = "Dashboard", subtitle =
           <Menu className="w-6 h-6" />
         </button>
 
-        <div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+        <div className="min-w-0 pr-2">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight truncate">
             {title}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium hidden sm:block">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium hidden md:block truncate">
             {subtitle}
           </p>
         </div>
@@ -68,14 +68,14 @@ export default function TopNavbar({ onMenuClick, title = "Dashboard", subtitle =
 
       {/* Right Controls: Switch to Customer Panel, Notifications & User Profile */}
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Switch to Customer Panel Button */}
+        {/* Switch to Customer Button */}
         <Link
           to="/restaurants"
           className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FF5A1F] border border-orange-200/80 font-bold text-xs transition shadow-2xs group"
-          title="Open Customer Panel"
+          title="Switch to Customer"
         >
           <Store className="w-4 h-4 text-[#FF5A1F] group-hover:scale-110 transition" />
-          <span className="hidden sm:inline">Customer Panel</span>
+          <span className="hidden sm:inline">Customer</span>
         </Link>
 
         {/* Notifications Bell */}

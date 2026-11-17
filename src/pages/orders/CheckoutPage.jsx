@@ -540,6 +540,23 @@ export default function CheckoutPage() {
                   )}
                 </button>
 
+                {/* Simulate Payment Failure button for testing Module 9 */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/payment/failure', {
+                      state: {
+                        amount: totalAmount,
+                        method: paymentMethod === 'card' ? 'Credit / Debit Card' : paymentMethod === 'upi' ? 'UPI' : 'Wallet',
+                        error: 'Payment declined by issuer bank (ERR_INSUFFICIENT_FUNDS)'
+                      }
+                    });
+                  }}
+                  className="w-full text-center text-[11px] font-semibold text-slate-400 hover:text-rose-500 transition py-1"
+                >
+                  ⚡ Test Payment Failure Screen (Module 9 Demo)
+                </button>
+
                 {/* Trust Seal matching Screen 9 */}
                 <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium pt-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
@@ -724,8 +741,15 @@ export default function CheckoutPage() {
               </button>
 
               <button
+                onClick={() => navigate('/payment/success', { state: { order: confirmedOrder, txnId: `TXN_${Math.floor(100000 + Math.random() * 900000)}` } })}
+                className="w-full py-2.5 border border-slate-200 hover:border-slate-300 text-slate-700 font-bold rounded-xl text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>View Payment Receipt & Details</span>
+              </button>
+
+              <button
                 onClick={() => navigate('/restaurants')}
-                className="w-full py-2.5 text-slate-600 hover:text-slate-900 font-bold rounded-xl text-xs transition cursor-pointer"
+                className="w-full py-2 text-slate-500 hover:text-slate-800 font-semibold rounded-xl text-xs transition cursor-pointer"
               >
                 Continue Browsing Restaurants
               </button>
