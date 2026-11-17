@@ -6,7 +6,7 @@ const DEFAULT_USERS = [
   {
     id: 'usr_admin',
     fullName: 'Vivek Vendra',
-    email: 'admin@foodexpress.com',
+    email: 'vivekvendra17@gmail.com',
     mobile: '+91 98765 43210',
     password: 'password123',
     role: 'Admin',
@@ -155,6 +155,58 @@ export function AuthProvider({ children }) {
     localStorage.setItem('fdms_users_list', JSON.stringify(updatedList));
   };
 
+  // Add Address
+  const addAddress = (newAddr) => {
+    if (!currentUser) return;
+    const addressWithId = {
+      id: `addr_${Date.now()}`,
+      ...newAddr,
+      isDefault: newAddr.isDefault || (!currentUser.addresses || currentUser.addresses.length === 0)
+    };
+
+    let updatedAddresses = currentUser.addresses || [];
+    if (addressWithId.isDefault) {
+      updatedAddresses = updatedAddresses.map(a => ({ ...a, isDefault: false }));
+    }
+    updatedAddresses = [...updatedAddresses, addressWithId];
+
+    updateProfile({ addresses: updatedAddresses });
+  };
+
+  // Update Address
+  const updateAddress = (addressId, addrData) => {
+    if (!currentUser || !currentUser.addresses) return;
+    let updatedAddresses = currentUser.addresses.map(a => {
+      if (a.id === addressId) {
+        return { ...a, ...addrData };
+      }
+      return addrData.isDefault ? { ...a, isDefault: false } : a;
+    });
+
+    updateProfile({ addresses: updatedAddresses });
+  };
+
+  // Delete Address
+  const deleteAddress = (addressId) => {
+    if (!currentUser || !currentUser.addresses) return;
+    let updatedAddresses = currentUser.addresses.filter(a => a.id !== addressId);
+    // If deleted address was default, make the first remaining address default
+    if (updatedAddresses.length > 0 && !updatedAddresses.some(a => a.isDefault)) {
+      updatedAddresses[0].isDefault = true;
+    }
+    updateProfile({ addresses: updatedAddresses });
+  };
+
+  // Set Default Address
+  const setDefaultAddress = (addressId) => {
+    if (!currentUser || !currentUser.addresses) return;
+    const updatedAddresses = currentUser.addresses.map(a => ({
+      ...a,
+      isDefault: a.id === addressId
+    }));
+    updateProfile({ addresses: updatedAddresses });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -166,6 +218,10 @@ export function AuthProvider({ children }) {
         resetPassword,
         logout,
         updateProfile,
+        addAddress,
+        updateAddress,
+        deleteAddress,
+        setDefaultAddress
       }}
     >
       {children}

@@ -18,6 +18,7 @@ import AdminCouponsPage from '../pages/admin/AdminCouponsPage';
 import AdminPaymentsPage from '../pages/admin/AdminPaymentsPage';
 import AdminReportsPage from '../pages/admin/AdminReportsPage';
 import AdminProfilePage from '../pages/admin/AdminProfilePage';
+import CustomerProfilePage from '../pages/customer/CustomerProfilePage';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function AppRoutes() {
@@ -180,18 +181,26 @@ export default function AppRoutes() {
         }
       />
 
+      {/* ========================================================
+          CUSTOMER PANEL (Top Navbar with Cart & Customer Storefront)
+         ======================================================== */}
       <Route
         path="/profile"
         element={
           <ProtectedRoute>
-            <AdminProfilePage />
+            <CustomerProfilePage />
           </ProtectedRoute>
         }
       />
 
-      {/* ========================================================
-          CUSTOMER PANEL (Top Navbar with Cart & Customer Storefront)
-         ======================================================== */}
+      <Route
+        path="/customer/profile"
+        element={
+          <ProtectedRoute>
+            <CustomerProfilePage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/restaurants"
         element={
