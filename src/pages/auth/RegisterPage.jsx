@@ -59,7 +59,7 @@ export default function RegisterPage() {
           position: "top-right",
           autoClose: 2500,
         });
-        navigate('/dashboard', { replace: true });
+        navigate(res.redirectPath || '/restaurants', { replace: true });
       } else {
         toast.error(res.error || 'Registration failed. Please try again.');
       }

@@ -11,7 +11,11 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(currentUser?.role)) {
-    return <Navigate to="/" replace />;
+    // Strictly isolate Admin and Customer panels:
+    // If Admin attempts to visit Customer storefront -> send to Admin Dashboard
+    // If Customer attempts to visit Admin panel -> send to Customer Restaurants
+    const destination = currentUser?.role === 'Admin' ? '/admin/dashboard' : '/restaurants';
+    return <Navigate to={destination} replace />;
   }
 
   return children;

@@ -66,18 +66,8 @@ export default function TopNavbar({ onMenuClick, title = "Dashboard", subtitle =
         </div>
       </div>
 
-      {/* Right Controls: Switch to Customer Panel, Notifications & User Profile */}
+      {/* Right Controls: Notifications & User Profile */}
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Switch to Customer Button */}
-        <Link
-          to="/restaurants"
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FF5A1F] border border-orange-200/80 font-bold text-xs transition shadow-2xs group"
-          title="Switch to Customer"
-        >
-          <Store className="w-4 h-4 text-[#FF5A1F] group-hover:scale-110 transition" />
-          <span className="hidden sm:inline">Customer</span>
-        </Link>
-
         {/* Notifications Bell */}
         <div className="relative" ref={notifRef}>
           <button
@@ -175,20 +165,20 @@ export default function TopNavbar({ onMenuClick, title = "Dashboard", subtitle =
 
               <div className="py-1">
                 <Link
-                  to="/profile"
+                  to="/admin/profile"
                   onClick={() => setShowProfileMenu(false)}
                   className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-orange-600 transition"
                 >
                   <User className="w-4 h-4 text-slate-400" />
-                  <span>View Profile</span>
+                  <span>Admin Profile</span>
                 </Link>
                 <Link
-                  to="/settings"
+                  to="/admin/reports"
                   onClick={() => setShowProfileMenu(false)}
                   className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-orange-600 transition"
                 >
                   <Settings className="w-4 h-4 text-slate-400" />
-                  <span>Account Settings</span>
+                  <span>Business Reports</span>
                 </Link>
               </div>
 

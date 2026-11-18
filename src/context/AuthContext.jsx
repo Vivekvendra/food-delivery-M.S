@@ -6,10 +6,22 @@ const DEFAULT_USERS = [
   {
     id: 'usr_admin',
     fullName: 'Vivek Vendra',
-    email: 'vivekvendra17@gmail.com',
+    email: 'admin@foodexpress.com',
     mobile: '+91 98765 43210',
     password: 'password123',
     role: 'Admin',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+    addresses: [
+      { id: 'addr_1', type: 'Office', address: 'FoodExpress HQ, Dwaraka Nagar, Visakhapatnam', isDefault: true }
+    ]
+  },
+  {
+    id: 'usr_customer',
+    fullName: 'Vivek Vendra',
+    email: 'customer@foodexpress.com',
+    mobile: '+91 98765 43210',
+    password: 'password123',
+    role: 'Customer',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
     addresses: [
       { id: 'addr_1', type: 'Home', address: 'D.No: 12-34, MVP Colony, Visakhapatnam - 530017', isDefault: true },
@@ -62,27 +74,54 @@ export function AuthProvider({ children }) {
   // Login handler
   const login = async ({ emailOrPhone, password, rememberMe = true }) => {
     const trimmedInput = emailOrPhone.trim().toLowerCase();
+
+    // Check Admin explicit login
+    if (trimmedInput === 'admin' || trimmedInput === 'admin@foodexpress.com') {
+      if (password !== 'admin123' && password !== 'password123') {
+        return { success: false, error: 'Invalid password for Admin. (Hint: password123)' };
+      }
+      const adminUser = DEFAULT_USERS[0];
+      setCurrentUser(adminUser);
+      return { 
+        success: true, 
+        user: adminUser, 
+        redirectPath: '/admin/dashboard' 
+      };
+    }
+
+    // Check Customer explicit demo login
+    if (trimmedInput === 'customer' || trimmedInput === 'customer@foodexpress.com' || trimmedInput === 'vivekvendra17@gmail.com') {
+      if (password !== 'customer123' && password !== 'password123') {
+        return { success: false, error: 'Invalid password for Customer. (Hint: password123)' };
+      }
+      const customerUser = DEFAULT_USERS[1];
+      setCurrentUser(customerUser);
+      return { 
+        success: true, 
+        user: customerUser, 
+        redirectPath: '/restaurants' 
+      };
+    }
     
-    // Find matching user by email or mobile number
+    // Find matching user in registeredUsers by email or mobile number
     const matched = registeredUsers.find(
       u => (u.email.toLowerCase() === trimmedInput || u.mobile.replace(/\s+/g, '') === trimmedInput.replace(/\s+/g, ''))
     );
 
     if (!matched) {
-      // For smooth demo experience, allow admin or any demo user if default password
-      if (trimmedInput === 'admin' || trimmedInput === 'admin@foodexpress.com') {
-        setCurrentUser(DEFAULT_USERS[0]);
-        return { success: true, user: DEFAULT_USERS[0] };
-      }
       return { success: false, error: 'User not found. Please check your credentials or register.' };
     }
 
-    if (matched.password !== password && password !== 'password123' && password !== 'admin123') {
+    if (matched.password !== password && password !== 'password123' && password !== 'admin123' && password !== 'customer123') {
       return { success: false, error: 'Invalid password. Please try again.' };
     }
 
     setCurrentUser(matched);
-    return { success: true, user: matched };
+    return { 
+      success: true, 
+      user: matched, 
+      redirectPath: matched.role === 'Admin' ? '/admin/dashboard' : '/restaurants' 
+    };
   };
 
   // Register handler
@@ -112,7 +151,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('fdms_users_list', JSON.stringify(updatedList));
     setCurrentUser(newUser);
 
-    return { success: true, user: newUser };
+    return { success: true, user: newUser, redirectPath: '/restaurants' };
   };
 
   // Forgot password

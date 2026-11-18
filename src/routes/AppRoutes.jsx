@@ -24,12 +24,25 @@ import CustomerCouponsPage from '../pages/customer/CustomerCouponsPage';
 import PaymentSuccessPage from '../pages/payment/PaymentSuccessPage';
 import PaymentFailurePage from '../pages/payment/PaymentFailurePage';
 import ProtectedRoute from './ProtectedRoute';
+import { useAuth } from '../context/AuthContext';
+
+function RootRedirect() {
+  const { currentUser, isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return currentUser?.role === 'Admin' ? (
+    <Navigate to="/admin/dashboard" replace />
+  ) : (
+    <Navigate to="/restaurants" replace />
+  );
+}
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Root redirect to Customer Restaurants storefront */}
-      <Route path="/" element={<Navigate to="/restaurants" replace />} />
+      {/* Dynamic Root redirect based on logged in role */}
+      <Route path="/" element={<RootRedirect />} />
 
       {/* Module 1: Authentication */}
       <Route path="/login" element={<LoginPage />} />
@@ -37,14 +50,14 @@ export default function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       {/* ========================================================
-          ADMIN PANEL (Always preserves the Dark Left Sidebar)
+          ADMIN PANEL (Protected - Strictly Admin Role)
          ======================================================== */}
       <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
       
       <Route
         path="/admin/dashboard"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <DashboardPage />
           </ProtectedRoute>
         }
@@ -53,7 +66,7 @@ export default function AppRoutes() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <DashboardPage />
           </ProtectedRoute>
         }
@@ -62,7 +75,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/restaurants"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminRestaurantsPage />
           </ProtectedRoute>
         }
@@ -71,7 +84,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/menu-items"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <MenuManagementPage />
           </ProtectedRoute>
         }
@@ -80,7 +93,7 @@ export default function AppRoutes() {
       <Route
         path="/menu-items"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <MenuManagementPage />
           </ProtectedRoute>
         }
@@ -89,7 +102,7 @@ export default function AppRoutes() {
       <Route
         path="/menu-items/:id"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <FoodDetailsPage />
           </ProtectedRoute>
         }
@@ -98,7 +111,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/orders"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminOrdersPage />
           </ProtectedRoute>
         }
@@ -107,7 +120,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/customers"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminCustomersPage />
           </ProtectedRoute>
         }
@@ -116,7 +129,7 @@ export default function AppRoutes() {
       <Route
         path="/customers"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminCustomersPage />
           </ProtectedRoute>
         }
@@ -125,7 +138,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/coupons"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminCouponsPage />
           </ProtectedRoute>
         }
@@ -134,7 +147,7 @@ export default function AppRoutes() {
       <Route
         path="/coupons"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminCouponsPage />
           </ProtectedRoute>
         }
@@ -143,7 +156,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/payments"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminPaymentsPage />
           </ProtectedRoute>
         }
@@ -152,7 +165,7 @@ export default function AppRoutes() {
       <Route
         path="/payments"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminPaymentsPage />
           </ProtectedRoute>
         }
@@ -161,7 +174,7 @@ export default function AppRoutes() {
       <Route
         path="/admin/reports"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminReportsPage />
           </ProtectedRoute>
         }
@@ -170,7 +183,7 @@ export default function AppRoutes() {
       <Route
         path="/reports"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminReportsPage />
           </ProtectedRoute>
         }
@@ -179,19 +192,19 @@ export default function AppRoutes() {
       <Route
         path="/admin/profile"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Admin']}>
             <AdminProfilePage />
           </ProtectedRoute>
         }
       />
 
       {/* ========================================================
-          CUSTOMER PANEL (Top Navbar with Cart & Customer Storefront)
+          CUSTOMER PANEL (Protected - Strictly Customer Role)
          ======================================================== */}
       <Route
         path="/profile"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CustomerProfilePage />
           </ProtectedRoute>
         }
@@ -200,15 +213,16 @@ export default function AppRoutes() {
       <Route
         path="/customer/profile"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CustomerProfilePage />
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/restaurants"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <RestaurantsPage />
           </ProtectedRoute>
         }
@@ -217,7 +231,7 @@ export default function AppRoutes() {
       <Route
         path="/restaurants/:id"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <RestaurantDetailsPage />
           </ProtectedRoute>
         }
@@ -226,7 +240,7 @@ export default function AppRoutes() {
       <Route
         path="/cart"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CartPage />
           </ProtectedRoute>
         }
@@ -235,7 +249,7 @@ export default function AppRoutes() {
       <Route
         path="/checkout"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CheckoutPage />
           </ProtectedRoute>
         }
@@ -244,7 +258,7 @@ export default function AppRoutes() {
       <Route
         path="/track-order"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderTrackingPage />
           </ProtectedRoute>
         }
@@ -253,7 +267,7 @@ export default function AppRoutes() {
       <Route
         path="/track-order/:id"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderTrackingPage />
           </ProtectedRoute>
         }
@@ -262,7 +276,7 @@ export default function AppRoutes() {
       <Route
         path="/orders/:id"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderTrackingPage />
           </ProtectedRoute>
         }
@@ -271,7 +285,7 @@ export default function AppRoutes() {
       <Route
         path="/orders"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderHistoryPage />
           </ProtectedRoute>
         }
@@ -280,7 +294,7 @@ export default function AppRoutes() {
       <Route
         path="/my-orders"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderHistoryPage />
           </ProtectedRoute>
         }
@@ -289,7 +303,7 @@ export default function AppRoutes() {
       <Route
         path="/order-history"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderHistoryPage />
           </ProtectedRoute>
         }
@@ -298,7 +312,7 @@ export default function AppRoutes() {
       <Route
         path="/customer/orders"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <OrderHistoryPage />
           </ProtectedRoute>
         }
@@ -308,7 +322,7 @@ export default function AppRoutes() {
       <Route
         path="/coupons-offers"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CustomerCouponsPage />
           </ProtectedRoute>
         }
@@ -317,7 +331,7 @@ export default function AppRoutes() {
       <Route
         path="/customer/coupons"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <CustomerCouponsPage />
           </ProtectedRoute>
         }
@@ -326,7 +340,7 @@ export default function AppRoutes() {
       <Route
         path="/payment/success"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <PaymentSuccessPage />
           </ProtectedRoute>
         }
@@ -335,7 +349,7 @@ export default function AppRoutes() {
       <Route
         path="/payment/success/:id"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <PaymentSuccessPage />
           </ProtectedRoute>
         }
@@ -344,14 +358,14 @@ export default function AppRoutes() {
       <Route
         path="/payment/failure"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['Customer']}>
             <PaymentFailurePage />
           </ProtectedRoute>
         }
       />
 
-      {/* Catch-all */}
-      <Route path="*" element={<Navigate to="/restaurants" replace />} />
+      {/* Catch-all sends to role-appropriate home */}
+      <Route path="*" element={<RootRedirect />} />
     </Routes>
   );
 }
